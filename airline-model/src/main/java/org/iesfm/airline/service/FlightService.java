@@ -12,11 +12,9 @@ import java.util.List;
 public class FlightService {
 
     private FlightRepository flightRepository;
-    private PassengerRepository passengerRepository;
 
-    public FlightService(FlightRepository flightRepository, PassengerRepository passengerRepository) {
+    public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
-        this.passengerRepository = passengerRepository;
     }
 
     public List<Flight> listFlights() {

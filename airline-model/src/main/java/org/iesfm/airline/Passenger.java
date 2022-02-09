@@ -19,7 +19,7 @@ public class Passenger {
 
     @JsonCreator
     public Passenger (
-            @JsonProperty("passengerID") PassengerId passengerId,
+            @JsonProperty("passenger_id") PassengerId passengerId,
             @JsonProperty("email") Email email,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,

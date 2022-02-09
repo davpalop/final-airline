@@ -13,12 +13,10 @@ import java.util.List;
 @Service
 public class CaseService {
 
-    private FlightRepository flightRepository;
     private PassengerRepository passengerRepository;
     private CaseRepository caseRepository;
 
-    public CaseService(FlightRepository flightRepository, PassengerRepository passengerRepository, CaseRepository caseRepository) {
-        this.flightRepository = flightRepository;
+    public CaseService(PassengerRepository passengerRepository, CaseRepository caseRepository) {
         this.passengerRepository = passengerRepository;
         this.caseRepository = caseRepository;
     }
@@ -31,8 +29,8 @@ public class CaseService {
         return true;
     }
 
-    public List<Case> listCases(PassengerId passengerId) throws PassengerNotFoundException {
-        if (!passengerRepository.existsById(passengerId)) {
+    public List<Case> listCases(int flightId, String nif) throws PassengerNotFoundException {
+        if (!passengerRepository.existsById(new PassengerId(nif, flightId))) {
             throw new PassengerNotFoundException();
         }
         return caseRepository.findAll();
