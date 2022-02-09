@@ -3,12 +3,14 @@ package org.iesfm.airline;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 import java.util.Objects;
 
 public class Flight {
 
+    @Id
     private int id;
     private String origin;
     private String destiny;

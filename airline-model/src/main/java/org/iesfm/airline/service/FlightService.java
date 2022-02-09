@@ -4,9 +4,11 @@ import org.iesfm.airline.Flight;
 import org.iesfm.airline.exceptions.FlightNotFoundException;
 import org.iesfm.airline.repositories.FlightRepository;
 import org.iesfm.airline.repositories.PassengerRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class FlightService {
 
     private FlightRepository flightRepository;

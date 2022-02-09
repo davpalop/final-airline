@@ -2,14 +2,15 @@ package org.iesfm.airline;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Passenger {
 
-    private String nif;
-    private int id_flight;
+    @Id
+    private PassengerId passengerId;
     private Email email;
     private String name;
     private String surname;
@@ -18,15 +19,13 @@ public class Passenger {
 
     @JsonCreator
     public Passenger (
-            @JsonProperty("nif") String nif,
-            @JsonProperty("id") int id_flight,
+            @JsonProperty("passengerID") PassengerId passengerId,
             @JsonProperty("email") Email email,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,
             @JsonProperty("seat") int seat,
             @JsonProperty("cases") List<Case> cases) {
-        this.nif = nif;
-        this.id_flight = id_flight;
+        this.passengerId = passengerId;
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -34,20 +33,13 @@ public class Passenger {
         this.cases = cases;
     }
 
-    public String getNif() {
-        return nif;
+
+    public PassengerId getPassengerId() {
+        return passengerId;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
-    }
-
-    public int getId_flight() {
-        return id_flight;
-    }
-
-    public void setId_flight(int id_flight) {
-        this.id_flight = id_flight;
+    public void setPassengerId(PassengerId passengerId) {
+        this.passengerId = passengerId;
     }
 
     public Email getEmail() {
@@ -95,19 +87,18 @@ public class Passenger {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
-        return id_flight == passenger.id_flight && seat == passenger.seat && Objects.equals(nif, passenger.nif) && Objects.equals(email, passenger.email) && Objects.equals(name, passenger.name) && Objects.equals(surname, passenger.surname) && Objects.equals(cases, passenger.cases);
+        return seat == passenger.seat && Objects.equals(passengerId, passenger.passengerId) && Objects.equals(email, passenger.email) && Objects.equals(name, passenger.name) && Objects.equals(surname, passenger.surname) && Objects.equals(cases, passenger.cases);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nif, id_flight, email, name, surname, seat, cases);
+        return Objects.hash(passengerId, email, name, surname, seat, cases);
     }
 
     @Override
     public String toString() {
         return "Passenger{" +
-                "nif='" + nif + '\'' +
-                ", id_flight=" + id_flight +
+                "passengerId=" + passengerId +
                 ", email=" + email +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
