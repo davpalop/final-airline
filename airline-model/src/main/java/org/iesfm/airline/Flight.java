@@ -19,7 +19,7 @@ public class Flight {
     
     @JsonCreator
     public Flight (
-            @JsonProperty("id") int id,
+            @JsonProperty("flight_id") int id,
             @JsonProperty("origin") String origin,
             @JsonProperty("destiny") String destiny,
             @JsonProperty("date") Date date) {
