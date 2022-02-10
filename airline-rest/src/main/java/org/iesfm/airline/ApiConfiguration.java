@@ -16,7 +16,9 @@ public class ApiConfiguration {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
+        converter.setTargetType(MessageType.BYTES);
         return converter;
     }
+
 
 }

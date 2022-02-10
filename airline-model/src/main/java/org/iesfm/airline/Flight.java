@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Document(collection = "flights")
 public class Flight {
 
     @Id
-    private int id;
+    private Integer id;
     private String origin;
     private String destiny;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -19,7 +21,7 @@ public class Flight {
     
     @JsonCreator
     public Flight (
-            @JsonProperty("id") int id,
+            @JsonProperty("flightId") Integer id,
             @JsonProperty("origin") String origin,
             @JsonProperty("destiny") String destiny,
             @JsonProperty("date") Date date) {
@@ -29,11 +31,11 @@ public class Flight {
         this.date = date;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

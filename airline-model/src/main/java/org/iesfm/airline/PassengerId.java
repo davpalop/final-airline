@@ -11,15 +11,29 @@ public class PassengerId implements Serializable {
 
     @Id
     private String nif;
-    private int id;
+    private Integer flightId;
 
     @JsonCreator
     public PassengerId(
             @JsonProperty("nif") String nif,
-            @JsonProperty("id") int id){
+            @JsonProperty("flight_id") Integer flightId){
         this.nif=nif;
-        this.id=id;
+        this.flightId =flightId;
     }
 
+    public String getNif() {
+        return nif;
+    }
 
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
+    public Integer getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Integer flightId) {
+        this.flightId = flightId;
+    }
 }

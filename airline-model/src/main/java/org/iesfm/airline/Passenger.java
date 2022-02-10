@@ -3,10 +3,12 @@ package org.iesfm.airline;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
 
+@Document(collection = "passengers")
 public class Passenger {
 
     @Id
@@ -19,7 +21,7 @@ public class Passenger {
 
     @JsonCreator
     public Passenger (
-            @JsonProperty("passenger_id") PassengerId passengerId,
+            @JsonProperty("passengerId") PassengerId passengerId,
             @JsonProperty("email") Email email,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,

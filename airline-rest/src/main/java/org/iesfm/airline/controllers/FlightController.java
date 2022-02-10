@@ -27,15 +27,15 @@ public class FlightController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/flights")
     public List<Flight> listFlights() {
-            return flightService.listFlights();
+        return flightService.listFlights();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/flights")
+    @RequestMapping(method = RequestMethod.POST, path = "/flights")
     public void insertFlight(@RequestBody Flight flight) throws FlightNotFoundException {
-        if (!flightService.insertFlight(flight)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el vuelo");
+        if (flightService.getById(flight.getId()) == null) {
+            flightService.insertFlight(flight);
         } else {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Ya existía el vuelo");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existía el vuelo");
         }
     }
 }
