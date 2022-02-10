@@ -38,9 +38,14 @@ public class CaseController {
                            @RequestParam(name = "nif") String nif,
                            @RequestParam(name = "flight_id") int flightId) {
         try {
-            caseService.insertCase(luggage, new PassengerId(nif, flightId));
+            if(!getCaseService().insertCase(luggage, new PassengerId(nif, flightId))) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el equipaje");
+            } else {
+                throw new ResponseStatusException(HttpStatus.CREATED, "Ya existia el equipaje");
+            }
         } catch (PassengerNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el pasajero");
         }
+
     }
 }

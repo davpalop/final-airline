@@ -1,6 +1,7 @@
 package org.iesfm.airline.service;
 
 import org.iesfm.airline.Passenger;
+import org.iesfm.airline.PassengerId;
 import org.iesfm.airline.exceptions.FlightNotFoundException;
 import org.iesfm.airline.repositories.FlightRepository;
 import org.iesfm.airline.repositories.PassengerRepository;
@@ -24,6 +25,14 @@ public class PassengerService {
             throw new FlightNotFoundException();
         }
         return passengerRepository.findAll();
+    }
+
+    public boolean insertPassenger(Passenger passenger, int flight_id) throws FlightNotFoundException {
+        if (!flightRepository.existsById(flight_id)) {
+            throw new FlightNotFoundException();
+        }
+        passengerRepository.insert(passenger);
+        return true;
     }
 
     

@@ -33,7 +33,9 @@ public class FlightController {
     @RequestMapping(method = RequestMethod.PUT, path = "/flights")
     public void insertFlight(@RequestBody Flight flight) throws FlightNotFoundException {
         if (!flightService.insertFlight(flight)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el vuelo");
+        } else {
+            throw new ResponseStatusException(HttpStatus.CREATED, "Ya existía el vuelo");
         }
     }
 }

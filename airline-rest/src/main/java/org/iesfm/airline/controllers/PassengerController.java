@@ -5,10 +5,7 @@ import org.iesfm.airline.PassengerId;
 import org.iesfm.airline.exceptions.FlightNotFoundException;
 import org.iesfm.airline.service.PassengerService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -27,11 +24,25 @@ public class PassengerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/flights/{flight_id}/passengers")
-    public List<Passenger> listPassengers(@RequestParam(name = "flightId")int flightId) {
+    public List<Passenger> listPassengers(@RequestParam(name = "flight_id") int flightId) {
         try {
             return passengerService.listPassengersFromFlight(flightId);
         } catch (FlightNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/flights/{flight_id}/passengers")
+    public void insertPassenger(@RequestBody Passenger passenger,
+                                @RequestParam(name = "flight_id") int flightId) {
+        try {
+            if (!passengerService.insertPassenger(passenger, flightId)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el pasajero");
+            } else {
+                throw new ResponseStatusException(HttpStatus.CREATED, "Ya xistia el pasajero");
+            }
+        } catch (FlightNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Vuelo no encontrado");
         }
     }
 }
