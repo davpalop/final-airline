@@ -16,7 +16,7 @@ public class PassengerId implements Serializable {
     @JsonCreator
     public PassengerId(
             @JsonProperty("nif") String nif,
-            @JsonProperty("flight_id") Integer flightId){
+            @JsonProperty("flightId") Integer flightId){
         this.nif=nif;
         this.flightId =flightId;
     }
