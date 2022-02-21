@@ -47,17 +47,17 @@ public class PassengerController {
         }
     }
 
-//    @RequestMapping(method = RequestMethod.GET, path = "/flights/{flight_id}/passengers/{nif}/cases")
-//    public List<Case> listCases(@PathVariable(name = "flightId") int flightId,
-//                                @PathVariable(name = "nif") String nif) {
-//        if (passengerService.getById(flightId) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
-//        } else if (passengerService.findByPassengerId(new PassengerId(nif, flightId)) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
-//        } else {
-//            return passengerService.getCases(flightId, nif);
-//        }
-//        }
+    @RequestMapping(method = RequestMethod.GET, path = "/flights/{flightId}/passengers/{nif}/cases")
+    public List<Case> listCases(@PathVariable(name = "flightId") int flightId,
+                                @PathVariable(name = "nif") String nif) {
+        if (passengerService.getById(flightId) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
+        } else if (passengerService.findByPassengerId(new PassengerId(nif, flightId)) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
+        } else {
+            return passengerService.findCases(new PassengerId(nif, flightId));
+        }
+        }
 //
 //
 //    @RequestMapping(method = RequestMethod.POST, path = "/flights/{flight_id}/passengers/{nif}/cases")

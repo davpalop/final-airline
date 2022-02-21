@@ -45,19 +45,19 @@ public class PassengerService {
 //        return true;
 //    }
 //
-//    public List<Case> getCases(int flightId, String nif) {
-//        if (!flightRepository.existsById(flightId)) {
-//            return null;
-//        } else if (!passengerRepository.existsById(new PassengerId(nif, flightId))) {
-//            return null;
-//        } else {
-//            return passengerRepository.getCases(new PassengerId(nif, flightId));
-//        }
-//    }
+    public List<Case> findCases(PassengerId passengerId) {
+        if (!flightRepository.existsById(passengerId.getFlightId())) {
+            return null;
+        } else if (!passengerRepository.existsById(passengerId)) {
+            return null;
+        } else {
+            return passengerRepository.cases(passengerId);
+        }
+    }
 
-//    public Passenger findByPassengerId(PassengerId passengerId) {
-//        return passengerRepository.findByPassengerId(passengerId);
-//    }
+    public Passenger findByPassengerId(PassengerId passengerId) {
+        return passengerRepository.findByPassengerId(passengerId);
+    }
 
     public Flight getById(int flight_id) {
         return flightRepository.getById(flight_id);
