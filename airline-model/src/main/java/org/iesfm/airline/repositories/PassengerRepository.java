@@ -13,9 +13,9 @@ public interface PassengerRepository extends MongoRepository<Passenger, Passenge
     @Query("{'_id.flightId' : ?0}")
     List<Passenger> findByFlight(Integer flightId);
 
-    List<Case> getCases(PassengerId passengerId);
-
-    Passenger findByPassengerId(PassengerId passengerId);
+//    List<Case> getCases(PassengerId passengerId);
+//
+//    Passenger findByPassengerId(PassengerId passengerId);
 
 
 
