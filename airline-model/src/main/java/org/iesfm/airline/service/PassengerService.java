@@ -34,24 +34,23 @@ public class PassengerService {
         passengerRepository.insert(passenger);
     }
 
-//    public boolean insertCase(Case backpack, int flight_id, String nif) {
-//        if (!flightRepository.existsById(flight_id)) {
-//            return false;
-//        } else if (passengerRepository.existsById(new PassengerId(nif, flight_id))) {
-//            return false;
-//        }
-//        Passenger passenger = passengerRepository.findById(new PassengerId(nif, flight_id)).get();
-//        passenger.getCases().add(backpack);
-//        return true;
-//    }
-//
+    public boolean insertCase(Case backpack, PassengerId passengerId) {
+        if (!flightRepository.existsById(passengerId.getFlightId())) {
+            return false;
+        } else if (passengerRepository.existsById(passengerId)) {
+            return false;
+        }
+        passengerRepository.findById(passengerId).get().getCases().add(backpack);
+        return true;
+    }
+
     public List<Case> findCases(PassengerId passengerId) {
         if (!flightRepository.existsById(passengerId.getFlightId())) {
             return null;
         } else if (!passengerRepository.existsById(passengerId)) {
             return null;
         } else {
-            return passengerRepository.cases(passengerId);
+            return passengerRepository.findByPassengerId(passengerId).getCases();
         }
     }
 

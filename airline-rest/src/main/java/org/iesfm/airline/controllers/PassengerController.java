@@ -58,22 +58,22 @@ public class PassengerController {
             return passengerService.findCases(new PassengerId(nif, flightId));
         }
         }
-//
-//
-//    @RequestMapping(method = RequestMethod.POST, path = "/flights/{flight_id}/passengers/{nif}/cases")
-//    public void insertCase(@RequestParam Case luggage,
-//                           @PathVariable(name = "nif") String nif,
-//                           @PathVariable(name = "flightId") int flightId) {
-//        if (passengerService.getById(flightId) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
-//        } else if (passengerService.findByPassengerId(new PassengerId(nif, flightId)) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
-//        } else if (passengerService.getCases(flightId, nif) == null){
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el equipaje");
-//        } else {
-//            passengerService.getCases(flightId, nif).add(new Case(luggage.getCode(), luggage.getDescription()));
-//        }
-//
-//    }
+
+
+    @RequestMapping(method = RequestMethod.POST, path = "/flights/{flight_id}/passengers/{nif}/cases")
+    public void insertCase(@RequestParam Case luggage,
+                           @PathVariable(name = "nif") String nif,
+                           @PathVariable(name = "flightId") int flightId) {
+        if (passengerService.getById(flightId) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
+        } else if (passengerService.findByPassengerId(new PassengerId(nif, flightId)) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
+        } else if (passengerService.findCases(new PassengerId(nif, flightId)) == null){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el equipaje");
+        } else {
+            passengerService.findCases(new PassengerId(nif, flightId)).add(luggage);
+        }
+
+    }
 
 }
