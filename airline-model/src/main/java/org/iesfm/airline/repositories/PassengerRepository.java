@@ -10,12 +10,11 @@ import java.util.List;
 @Repository
 public interface PassengerRepository extends MongoRepository<Passenger, PassengerId>{
 
-    @Query("{'_id.flightId' : ?0}")
-    List<Passenger> findByFlight(Integer flightId);
-
-    List<Case> cases(PassengerId passengerId);
+//    @Query("{'passengerId.flightId' : ?0}")
+    List<Passenger> findByPassengerIdFlightId(Integer flightId);
 
     Passenger findByPassengerId(PassengerId passengerId);
+
 
 
 

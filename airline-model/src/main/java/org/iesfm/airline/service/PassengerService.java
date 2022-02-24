@@ -24,7 +24,7 @@ public class PassengerService {
         if (!flightRepository.existsById(flightId)) {
             throw new FlightNotFoundException();
         }
-        return passengerRepository.findByFlight(flightId);
+        return passengerRepository.findByPassengerIdFlightId(flightId);
     }
 
     public void insertPassenger(Passenger passenger) throws FlightNotFoundException {
@@ -34,14 +34,15 @@ public class PassengerService {
         passengerRepository.insert(passenger);
     }
 
-    public boolean insertCase(Case backpack, PassengerId passengerId) {
-        if (!flightRepository.existsById(passengerId.getFlightId())) {
-            return false;
-        } else if (passengerRepository.existsById(passengerId)) {
-            return false;
+    public void insertCase(Case backpack, String nif, Integer flightId) throws FlightNotFoundException, PassengerNotFoundException {
+        if (!flightRepository.existsById(flightId)) {
+            throw new FlightNotFoundException();
+        } else if (!passengerRepository.existsById(new PassengerId(nif, flightId))) {
+            throw new PassengerNotFoundException();
         }
-        passengerRepository.findById(passengerId).get().getCases().add(backpack);
-        return true;
+        Passenger passenger = passengerRepository.findByPassengerId(new PassengerId(nif, flightId));
+        passenger.getCases().add(backpack);
+        passengerRepository.save(passenger);
     }
 
     public List<Case> findCases(PassengerId passengerId) {

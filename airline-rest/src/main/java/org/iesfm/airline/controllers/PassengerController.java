@@ -4,6 +4,7 @@ import org.iesfm.airline.Case;
 import org.iesfm.airline.Passenger;
 import org.iesfm.airline.PassengerId;
 import org.iesfm.airline.exceptions.FlightNotFoundException;
+import org.iesfm.airline.exceptions.PassengerNotFoundException;
 import org.iesfm.airline.service.PassengerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -60,19 +61,18 @@ public class PassengerController {
         }
 
 
-    @RequestMapping(method = RequestMethod.POST, path = "/flights/{flight_id}/passengers/{nif}/cases")
-    public void insertCase(@RequestParam Case luggage,
-                           @PathVariable(name = "nif") String nif,
-                           @PathVariable(name = "flightId") int flightId) {
-        if (passengerService.getById(flightId) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
-        } else if (passengerService.findByPassengerId(new PassengerId(nif, flightId)) == null) {
+    @RequestMapping(method = RequestMethod.PUT, path = "/flights/{flightId}/passengers/{nif}/cases")
+    public void insertCase(@RequestBody Case luggage,
+                           @PathVariable(name = "flightId") int flightId,
+                           @PathVariable(name = "nif") String nif) {
+        try {
+            passengerService.insertCase(luggage, nif, flightId);
+        } catch (FlightNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No encontrado el vuelo");
+        } catch (PassengerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
-        } else if (passengerService.findCases(new PassengerId(nif, flightId)) == null){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existia el equipaje");
-        } else {
-            passengerService.findCases(new PassengerId(nif, flightId)).add(luggage);
         }
+
 
     }
 
