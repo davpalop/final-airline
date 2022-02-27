@@ -65,12 +65,16 @@ public class PassengerController {
     public void insertCase(@RequestBody Case luggage,
                            @PathVariable(name = "flightId") int flightId,
                            @PathVariable(name = "nif") String nif) {
+        if(!passengerService.findByPassengerId(new PassengerId(nif, flightId)).getCases().contains(luggage))
         try {
             passengerService.insertCase(luggage, nif, flightId);
         } catch (FlightNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "No encontrado el vuelo");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el vuelo");
         } catch (PassengerNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado el pasajero");
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe la maleta");
         }
 
 
